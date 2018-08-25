@@ -18,6 +18,13 @@ func main() {
 	//Defer typically used as a clean-up function to be run as the last operation after everything else as
 	//as been done
 
+	//Safe division using the defer function
+	//Run the program and observe that the zero divide does not cause the program to fail
+	//The recover function prints an error and continues running the program
+	//The subsequent divide runs fine
+	fmt.Println("safe division ", safeDivision(5, 0))
+	fmt.Println("safe division ", safeDivision(5, 5))
+
 	//Run a factorial recursive function
 	fmt.Println("The factorial of 10 = ", factorial(10))
 
@@ -37,7 +44,7 @@ func main() {
 	fmt.Println("doubleNum twice ", doubleNum())
 
 	//Example using the map data structure - <key, value> mapping
-	// map operation: create, add, delete, find, update, len -no. of eleemnts in the map
+	//map operation: create, add, delete, find, update, len -no. of eleemnts in the map
 
 	// Create the map
 	presidentMap := make(map[string]int)
@@ -78,7 +85,23 @@ func main() {
 
 	//Print the value from a variadic function - undefined number of arguments
 	fmt.Println("The value of the variadic function ", subtractValues(1, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7))
+
+	demoPanic()
+
 }
+
+//Working with Panic to catch exceptions
+func demoPanic() {
+
+	defer func() {
+
+		fmt.Println(recover())
+	}()
+
+	panic("PANIC")
+
+}
+
 func printFunc2() {
 
 	fmt.Println(" Print func2")
@@ -87,6 +110,20 @@ func printFunc2() {
 func printFunc1() {
 
 	fmt.Println("Print func1")
+}
+
+//Used inconjunction with the defer and recover function to guard against zero divide
+//
+func safeDivision(num1, num2 int) int {
+
+	//Use defer to guard against zero divide
+	defer func() {
+
+		fmt.Println(recover())
+	}() //must be a function call
+
+	solution := num1 / num2
+	return solution
 }
 
 //Function demonstrates passing an array of float, return a float

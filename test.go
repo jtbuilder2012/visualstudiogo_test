@@ -1,8 +1,6 @@
 package main
 
-import (
-	"fmt"
-)
+import "fmt"
 
 func main() {
 	fmt.Println("Hello, playground in MS Visual Code first run......")
